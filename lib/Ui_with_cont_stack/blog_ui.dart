@@ -51,38 +51,41 @@ class BlogUI extends StatelessWidget {
                       color: Colors.black,
                     ))
               ],
-              bottom: TabBar(
-                  isScrollable: true,
-                  labelColor: maincolor,
-                  indicatorColor: maincolor,
-                  unselectedLabelColor: secondcolor,
-                  tabs: const [
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text("For You"),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text("Design"),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text("Beauty"),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text("Education"),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text("Entertainment"),
-                    ),
-                  ]),
+              bottom: PreferredSize(
+                preferredSize: const Size.fromHeight(50),
+                child: TabBar(
+                    isScrollable: true,
+                    labelColor: maincolor,
+                    indicatorColor: maincolor,
+                    unselectedLabelColor: secondcolor,
+                    tabs: const [
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text("For You"),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text("Design"),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text("Beauty"),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text("Education"),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text("Entertainment"),
+                      ),
+                    ]),
+              ),
             ),
             body: TabBarView(children: [
               ListView.separated(
                   itemBuilder: (context, index) {
-                    return _buildArticleItem(index);
+                    return BlogTile(index: index);
                   },
                   separatorBuilder: (context, index) => const SizedBox(
                         height: 16.0,
@@ -112,79 +115,94 @@ class BlogUI extends StatelessWidget {
           ),
         ));
   }
+}
 
-  Widget _buildArticleItem(int index) {
+class BlogTile extends StatelessWidget {
+  final int index;
+  const BlogTile({
+    Key? key,
+    required this.index,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     Map article = articles[index];
-
-    return Container(
-      color: Colors.white,
-      child: Stack(children: [
-        Container(
-          width: 90,
-          height: 90,
-          color: backcolor,
-        ),
-        Container(
-          color: Colors.white,
-          padding: const EdgeInsets.all(16.0),
-          margin: const EdgeInsets.all(16.0),
-          child: Row(children: [
-            Container(
-              height: 100,
-              color: Colors.blue,
-              width: 80.0,
-              child: const Image(
-                image: NetworkImage(
-                  "https://static.vecteezy.com/system/resources/previews/000/201/215/original/vector-beach-vacations-background.jpg",
-                ),
-                fit: BoxFit.cover,
-              ),
-            ),
-            const SizedBox(
-              width: 20,
-            ),
-            Expanded(
-              child: Column(
+    return SizedBox(
+      child: Stack(
+        children: [
+          Container(
+            // height: MediaQuery.of(context).size.height * 0.015,
+            // width: MediaQuery.of(context).size.width * 0.25,
+            height: 100,
+            width: 100,
+            color: Colors.blueGrey[100],
+          ),
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: Container(
+              color: Colors.white,
+              padding: const EdgeInsets.all(10),
+              child: Row(
                 children: [
-                  Text(
-                    article["title"],
-                    textAlign: TextAlign.justify,
-                    style: TextStyle(
-                        color: secondcolor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18),
+                  Container(
+                    height: 100,
+                    width: 100,
+                    decoration: const BoxDecoration(
+                        image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: NetworkImage(
+                          'https://images.unsplash.com/photo-1520454974749-611b7248ffdb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80'),
+                    )),
                   ),
-                  Text.rich(
-                    TextSpan(children: [
-                      WidgetSpan(
-                          child: CircleAvatar(
-                        radius: 15,
-                        backgroundColor: maincolor,
-                      )),
-                      const WidgetSpan(
-                          child: SizedBox(
-                        width: 5.0,
-                      )),
-                      TextSpan(
-                        text: article["author"],
-                        style: const TextStyle(fontSize: 16.0),
+                  const SizedBox(
+                    width: 12,
+                  ),
+                  Expanded(
+                      child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        article['title'],
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w600, fontSize: 16),
                       ),
-                      const WidgetSpan(
-                          child: SizedBox(
-                        width: 20.0,
-                      )),
-                      TextSpan(
-                        text: article['time'],
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text.rich(
+                        TextSpan(children: [
+                          const WidgetSpan(
+                              child: CircleAvatar(
+                            radius: 15,
+                          )),
+                          const WidgetSpan(
+                              child: SizedBox(
+                            width: 10,
+                          )),
+                          TextSpan(text: article['author']),
+                          const WidgetSpan(
+                              child: SizedBox(
+                            width: 20,
+                          )),
+                          TextSpan(text: article['time'])
+                        ]),
                       )
-                    ]),
-                    style: const TextStyle(height: 2.0),
-                  )
+                    ],
+                  ))
                 ],
               ),
-            )
-          ]),
-        )
-      ]),
+            ),
+          )
+        ],
+      ),
     );
   }
+}
+
+void main(List<String> args) {
+  runApp(const MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: BlogUI(),
+  ));
 }
