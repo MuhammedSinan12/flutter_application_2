@@ -31,7 +31,7 @@ class PopularHotels extends StatelessWidget {
               child: Column(
                 children: [
                   Container(
-                    height: MediaQuery.of(context).size.height * 0.13,
+                    height: MediaQuery.of(context).size.height * 0.12,
                     decoration: BoxDecoration(
                         borderRadius: const BorderRadius.only(
                             topLeft: Radius.circular(10),

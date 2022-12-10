@@ -10,7 +10,7 @@ class Hotelss extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       padding: const EdgeInsets.only(left: 15, right: 15, bottom: 20),
       shrinkWrap: true,
-      itemBuilder: (context, index) {
+      itemBuilder: (context, int index) {
         var data = pophotel[index];
         return Container(
           height: MediaQuery.of(context).size.height * 0.15,

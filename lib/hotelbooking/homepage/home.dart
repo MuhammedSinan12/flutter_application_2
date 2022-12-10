@@ -37,7 +37,7 @@ class _HotelUiScrollableState extends State<HotelUiScrollable> {
             ),
             const SearchBAr(),
             const SizedBox(
-              height: 25,
+              height: 20,
             ),
             const Titless(title: 'Popular Hotels'),
             const SizedBox(
